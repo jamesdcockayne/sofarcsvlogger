@@ -32,7 +32,7 @@ public class Program
                 var reading =
                     new CSVReading
                     {
-                        TimestampUtc = DateTime.UtcNow,
+                        TimestampUtc = DateTime.UtcNow.ToString("r"),
                         running_state = await GetRegisterAsync(client, 0x200),
                         batterySOC = await GetRegisterAsync(client, 0x210),
                         battery_power = SofarReadingToAbsoluteWatts(await GetRegisterAsync(client, 0x20d)),
@@ -108,7 +108,7 @@ public class Program
 
     private class CSVReading
     {
-        public DateTime TimestampUtc { get; init; }
+        public string TimestampUtc { get; init; }
         public int running_state { get; init; }
         public int batterySOC { get; init; }
         public int battery_cycles { get; init; }
