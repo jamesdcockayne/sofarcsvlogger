@@ -38,9 +38,11 @@ public class Program
                         battery_power = SofarReadingToAbsoluteWatts(await GetRegisterAsync(client, 0x20d)),
                         battery_current = await GetRegisterAsync(client, 0x20c) / 100d,
                         battery_cycles = await GetRegisterAsync(client, 0x22c),
+                        battery_voltage = await GetRegisterAsync(client, 0x20e) / 100d,
+                        battery_temp = await GetRegisterAsync(client, 0x211),
                         gridPower = SofarReadingToAbsoluteWatts(await GetRegisterAsync(client, 0x212)),
                         grid_freq = await GetRegisterAsync(client, 0x20c) / 100d,
-                        grid_voltage = await GetRegisterAsync(client, 0x20c) / 10d,
+                        grid_voltage = await GetRegisterAsync(client, 0x0206) / 10d,
                         consumptionWatts = await GetRegisterAsync(client, 0x213) * 10,
                         solarPVWatts = await GetRegisterAsync(client, 0x215) * 10,
                         solarPVAmps = await GetRegisterAsync(client, 0x236) / 100d,
@@ -49,7 +51,7 @@ public class Program
                         today_purchase = await GetRegisterAsync(client, 0x21a) / 100d,
                         today_consumption = await GetRegisterAsync(client, 0x21b) / 100d,
                         inverter_temp = await GetRegisterAsync(client, 0x238),
-                        inverterHS_temp = await GetRegisterAsync(client, 0x238),
+                        inverterHS_temp = await GetRegisterAsync(client, 0x239),
                     };
 
                 await LogCSVReadingAsync(reading);
@@ -113,7 +115,7 @@ public class Program
         public int batterySOC { get; init; }
         public int battery_cycles { get; init; }
         public int battery_power { get; init; }
-        public int battery_voltage { get; init; }
+        public double battery_voltage { get; init; }
         public double battery_current { get; init; }
         public int battery_temp { get; init; }
         public int gridPower { get; init; }
